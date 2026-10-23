@@ -1,0 +1,36 @@
+# ── 构建产物 ─────────────────────────────────────────────
+bin/
+obj/
+Release/
+*.user
+*.suo
+.vs/
+*.pdb
+*.deps.json
+
+# ── 第三方引用库（不随仓库分发）─────────────────────────
+lib/*.dll
+lib/*.pdb
+lib/*.xml
+
+# ── 游戏程序集副本（绝不允许提交）──────────────────────
+game_dlls/
+*_Data/
+TeamSoda.Duckov.*.dll
+ItemStatsSystem.dll
+SodaLocalization.dll
+UnityEngine*.dll
+Assembly-CSharp.dll
+0Harmony.dll
+EasySave3.dll
+FMODUnity.dll
+
+# ── 反编译 / 分析 / 备份 ────────────────────────────────
+tools/out/
+backup/
+*.bak
+*.bak-*
+
+# ── 打包与运行时产物 ────────────────────────────────────
+*.zip
+*.log

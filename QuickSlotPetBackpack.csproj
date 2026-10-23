@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>disable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <AssemblyName>QuickSlotPetBackpack</AssemblyName>
+        <RootNamespace>QuickSlotPetBackpack</RootNamespace>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+
+        <!-- 娓告垙瀹夎鐩綍锛堝寘鍚?Duckov.exe锛夛紱鍙敤 -p:DuckovPath="..." 瑕嗙洊 -->
+        <DuckovPath Condition="'$(DuckovPath)' == ''">E:\Steam\steamapps\common\Escape from Duckov</DuckovPath>
+        <SubPath>\Duckov_Data\Managed\</SubPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="$(DuckovPath)$(SubPath)TeamSoda.*">
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="$(DuckovPath)$(SubPath)ItemStatsSystem.dll">
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="$(DuckovPath)$(SubPath)SodaLocalization.dll">
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="$(DuckovPath)$(SubPath)Unity*">
+            <Private>False</Private>
+        </Reference>
+        <!-- AudioManager.Post 鐨勮繑鍥炲€肩被鍨嬪畾涔夊湪杩欓噷 -->
+        <Reference Include="$(DuckovPath)$(SubPath)FMODUnity.dll">
+            <Private>False</Private>
+        </Reference>
+    </ItemGroup>
+
+    <!--
+        Harmony 涓嶅唴宓屻€佷笉闅?mod 鍒嗗彂锛岃繍琛屾椂渚濊禆鍓嶇疆銆孒armonyLib銆嶏紙宸ュ潑 3589088839锛?        宸茬粡鎶?0Harmony.dll 杞藉叆杩涚▼銆傝繖閲屼粎浣滅紪璇戞湡寮曠敤銆?    -->
+    <ItemGroup>
+        <Reference Include="lib\0Harmony.dll">
+            <Private>False</Private>
+        </Reference>
+    </ItemGroup>
+
+    <!-- 鏋勫缓瀹岃嚜鍔ㄦ暣鐞嗘垚鍙姞杞界殑 mod 鏂囦欢澶癸細bin/Release/Mod/QuickSlotPetBackpack/ -->
+    <Target Name="PackModFolder" AfterTargets="Build">
+        <ItemGroup>
+            <ModPayload Include="$(TargetPath)" />
+            <ModPayload Include="$(MSBuildProjectDirectory)\info.ini" />
+            <ModPayload Include="$(MSBuildProjectDirectory)\preview.png"
+                        Condition="Exists('$(MSBuildProjectDirectory)\preview.png')" />
+        </ItemGroup>
+        <Copy SourceFiles="@(ModPayload)" DestinationFolder="$(OutputPath)Mod\$(AssemblyName)" SkipUnchangedFiles="false" />
+    </Target>
+
+</Project>
